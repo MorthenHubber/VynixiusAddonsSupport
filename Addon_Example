@@ -1,0 +1,70 @@
+return {
+    Name = "My Addon",
+    Author = "Your Name",
+    Description = "Short description of what this addon does",
+
+    Init = function(api)
+        local mainGroup = api.AddLeftGroupbox("My Addon")
+
+        mainGroup:AddToggle("MyToggle", {
+            Text = "Enable Something",
+            Default = false,
+            Callback = function(state)
+                if state then
+                    api.Notify("My Addon", "Enabled")
+                else
+                    api.Notify("My Addon", "Disabled")
+                end
+            end,
+        })
+
+        mainGroup:AddButton({
+            Text = "Do Thing",
+            DoubleClick = false,
+            Func = function()
+                api.Notify("My Addon", "Button clicked")
+            end,
+        })
+
+        mainGroup:AddSlider("MySlider", {
+            Text = "Amount",
+            Default = 10,
+            Min = 0,
+            Max = 100,
+            Rounding = 0,
+            Callback = function(value)
+                print("Slider value:", value)
+            end,
+        })
+
+        local rightGroup = api.AddRightGroupbox("My Addon Settings")
+
+        rightGroup:AddInput("MyInput", {
+            Text = "Text Input",
+            Default = "",
+            Placeholder = "Type here",
+            Finished = true,
+            Callback = function(value)
+                print("Input:", value)
+            end,
+        })
+
+        rightGroup:AddDropdown("MyDropdown", {
+            Text = "Pick Option",
+            Values = { "Option A", "Option B", "Option C" },
+            Default = "Option A",
+            Callback = function(value)
+                print("Selected:", value)
+            end,
+        })
+
+        rightGroup:AddLabel("Keybind"):AddKeyPicker("MyKeybind", {
+            Default = "G",
+            Text = "Trigger key",
+            Mode = "Press",
+            Callback = function()
+                api.Notify("My Addon", "Keybind fired")
+            end,
+        })
+    end,
+}
